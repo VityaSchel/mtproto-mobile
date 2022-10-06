@@ -4,6 +4,9 @@ import { MD3DarkTheme, Provider as PaperProvider, Text } from 'react-native-pape
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider as UIKittenProvider } from '@ui-kitten/components'
 import MethodInput from './src/components/MethodInput'
+import MethodParams from './src/components/MethodParams'
+import { Provider } from 'react-redux'
+import { store } from './src/redux/store'
 
 export default function Main() {
   return (
@@ -17,12 +20,15 @@ export default function Main() {
 
 function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.view}>
-        <MethodInput />
-        <StatusBar style='light' />
-      </View>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.view}>
+          <MethodInput />
+          <MethodParams />
+          <StatusBar style='light' />
+        </View>
+      </SafeAreaView>
+    </Provider>
   )
 }
 

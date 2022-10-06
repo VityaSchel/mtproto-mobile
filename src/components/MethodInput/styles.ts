@@ -12,7 +12,8 @@ export default StyleSheet.create({
     position: 'absolute', 
     width: '100%',
     display: 'flex',
-    flex: 1
+    flex: 1,
+    zIndex: 10
   },
   menuItem: {
     width: '100%',

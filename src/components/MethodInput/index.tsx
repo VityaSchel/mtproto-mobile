@@ -1,8 +1,12 @@
 import React from 'react'
 import { View } from 'react-native'
+import type { TextInput as ReactNativeTextInput } from 'react-native'
 import { TextInput, Menu, Surface } from 'react-native-paper'
+// import type { NativeTextInput } from 'react-native'
 import tlSchema from '../../tl-schema.json'
 import styles from './styles'
+import { useAppDispatch } from '../../redux/store'
+import { resetMethod, setMethod } from '../../redux/slices/request'
 
 type Method = {
     id: string
@@ -22,7 +26,16 @@ export default function MethodInput() {
   const [value, setValue] = React.useState(null)
   const isValidMethodName = methodsNames.includes(value)
   const [data, setData] = React.useState<Method['method'][]>(methodsNames)
-  const methodInputRef = React.useRef()
+  const methodInputRef = React.useRef<ReactNativeTextInput>()
+  const dispatch = useAppDispatch()
+
+  React.useEffect(() => {
+    if(isValidMethodName) {
+      dispatch(setMethod(value))
+    } else {
+      dispatch(resetMethod())
+    }
+  }, [isValidMethodName])
 
   const onSelect = (item: Method) => {
     setValue(item.method)
