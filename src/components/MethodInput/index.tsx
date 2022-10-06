@@ -14,16 +14,19 @@ type Method = {
     type: string
 }
 
-const filter = (item: Method, query) => item.method.toLowerCase().includes(query.toLowerCase())
+const filter = (methodName: Method['method'], query) => methodName.toLowerCase().includes(query.toLowerCase())
 const methods = tlSchema.methods
+const methodsNames = tlSchema.methods.map(m => m.method)
 
 export default function MethodInput() {
   const [value, setValue] = React.useState(null)
-  const [data, setData] = React.useState<Method[]>(tlSchema.methods)
+  const isValidMethodName = methodsNames.includes(value)
+  const [data, setData] = React.useState<Method['method'][]>(methodsNames)
+  const methodInputRef = React.useRef()
 
-  const onSelect = (item) => {
-    // setValue(movies[index].title)
-    console.log(item)
+  const onSelect = (item: Method) => {
+    setValue(item.method)
+    methodInputRef.current.blur()
   }
 
   const onChangeText = (query) => {
@@ -31,20 +34,28 @@ export default function MethodInput() {
     const suggestions = []
     let i = 0
     while(suggestions.length < 5) {
-      const suggestion = methods[i]
+      const suggestion = methodsNames[i]
       if(filter(suggestion, query)) suggestions.push(suggestion)
       if(++i === methods.length) break
     }
     setData(suggestions)
   }
 
-  const renderOption = (item: Method, index) => (
-    <Menu.Item 
-      onPress={() => onSelect(item)} 
-      title={item.method}
-      key={index}
-    />
-  )
+  const renderOption = (methodName: Method['method'], index) => {
+    const method = methods.find(m => m.method === methodName)
+    
+    return (
+      <Menu.Item 
+        onPress={() => onSelect(method)} 
+        title={method.method}
+        key={index}
+        style={styles.menuItem}
+        contentStyle={styles.menuItem}
+      />
+    )
+  }
+
+  const showSuggestionsList = !isValidMethodName && value?.length > 0 && data.length > 0
 
   return (
     <View style={styles.container}>
@@ -52,15 +63,14 @@ export default function MethodInput() {
         label='API Method'
         value={value}
         onChangeText={onChangeText}
+        ref={methodInputRef}
+        mode='outlined'
       />
-      <Menu
-        visible={value?.length > 1 && data.length > 0}
-        onDismiss={() => {}}
-        anchor={{ x: 10, y: 10 }}
-        style={{ marginTop: 60, position: 'absolute' }}
+      <Surface
+        style={{ ...styles.menu, display: showSuggestionsList ? 'flex' : 'none' }}
       >
         {data.map(renderOption)}
-      </Menu>
+      </Surface>
     </View>
   )
 }
