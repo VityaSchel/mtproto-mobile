@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { MD3DarkTheme, Provider as PaperProvider, Text } from 'react-native-paper'
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider as UIKittenProvider } from '@ui-kitten/components'
@@ -17,12 +17,13 @@ export default function Main() {
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <MethodInput />
-      <StatusBar style='light' />
-    </View>
-  );
+    <SafeAreaView style={styles.container}>
+      <View style={styles.view}>
+        <MethodInput />
+        <StatusBar style='light' />
+      </View>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -32,4 +33,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+  view: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    padding: 30,
+    paddingTop: 50,
+    alignItems: 'center'
+  },
+})
