@@ -8,11 +8,13 @@ import { BooleanField, FieldProps, NumberField, StringField } from './fields'
 import styles from './styles'
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useNavigation } from '@react-navigation/native'
 
 export default function MethodParams() {
   const request = useAppSelector(selector => selector.request)
   const method = tlschema.methods.find(m => m.method === request.method)
-
+  
   if(!method) return (
     <Text>
       Select method first
@@ -22,7 +24,7 @@ export default function MethodParams() {
   const methodParams = method.params
 
   return (
-    <ScrollView style={styles.params}>
+    <ScrollView style={styles.params} nestedScrollEnabled>
       {methodParams
         .filter(param => !['!X', '#'].includes(param.type))
         .map((param, i) => <Param param={param} key={i} />)}
@@ -67,12 +69,28 @@ const getParamInputType = (mtprotoType: string): ParamTypeResult => {
 }
 
 function Param(props: { param: ParamAlias }) {
+  const navigation = useNavigation()
   const paramType = getParamInputType(props.param.type)
 
   const sharedProps: FieldProps = { fieldID: props.param.name, default: paramType.optionalDefault }
 
   const paramComponent = paramType.isConstructor
-    ? <Text>[_] {paramType.type} [_]</Text>
+    ? (
+      <View>
+        {/* {!paramType.array && <Text style={{ marginRight: 10 }}>[_]</Text>} */}
+        <Button 
+          // icon='playlist-edit' 
+          mode='outlined' 
+          onPress={() => navigation.push('ConstructorEditor', { test: paramType.type })}
+          style={{ flex: 1 }}
+          compact
+        >
+          <Icon name='playlist-edit' size={15} />
+          {' '}
+          {paramType.type}
+        </Button>
+      </View>
+    )
     : {
       'number': <NumberField {...sharedProps} />,
       'string': <StringField {...sharedProps} />,
@@ -93,7 +111,6 @@ function Param(props: { param: ParamAlias }) {
 
 function ArrayOfParams(props: { children: JSX.Element, fieldProps: FieldProps }) {
   const [value, setValue] = React.useState<string[]>([])
-  console.log(props.children.props)
 
   const addItem = () => {
     setValue(value.concat(nanoid()))
@@ -116,7 +133,7 @@ function ArrayOfParams(props: { children: JSX.Element, fieldProps: FieldProps })
           style={styles.vectorAdd}
         >+</Button>
       </View>
-      <ScrollView style={styles.vectorList}>
+      <ScrollView style={styles.vectorList} nestedScrollEnabled>
         {value.map((fieldArrayID, index) => (
           <View key={index} style={styles.vectorField}>
             {{ 

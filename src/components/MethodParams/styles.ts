@@ -10,13 +10,14 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    marginBottom: 10
   },
   paramName: {
     fontWeight: 'bold',
     fontSize: 20,
     marginRight: 10,
-    maxWidth: 190
+    maxWidth: 180
   },
   field: {
     flex: 1
@@ -24,7 +25,7 @@ export default StyleSheet.create({
   vector: { 
     backgroundColor: '#222', 
     padding: 10, 
-    flex: 1 
+    flex: 1
   },
   vectorTopRow: {
     display: 'flex',
@@ -44,7 +45,8 @@ export default StyleSheet.create({
   vectorField: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   vectorRemove: {
     width: 30

@@ -51,7 +51,7 @@ export function NumberField(props: FieldProps) {
   )
 }
 
-export function StringFieldФккфн(props: FieldProps) {
+export function StringField(props: FieldProps) {
   const params = useAppSelector(selector => selector.request.params)
   const dispatch = useAppDispatch()
   const value = params[props.fieldID] ?? ''

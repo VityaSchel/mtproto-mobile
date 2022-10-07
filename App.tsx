@@ -1,12 +1,16 @@
-import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { MD3DarkTheme, Provider as PaperProvider, Text } from 'react-native-paper'
 import * as eva from '@eva-design/eva'
 import { ApplicationProvider as UIKittenProvider } from '@ui-kitten/components'
-import MethodInput from './src/components/MethodInput'
-import MethodParams from './src/components/MethodParams'
 import { Provider } from 'react-redux'
 import { store } from './src/redux/store'
+import { NavigationContainer, DarkTheme } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { StatusBar } from 'expo-status-bar'
+import HomeScreen from './src/HomeScreen'
+import EditorScreen from './src/ConstructorParams/EditorScreen'
+
+const Stack = createNativeStackNavigator()
 
 export default function Main() {
   return (
@@ -21,13 +25,17 @@ export default function Main() {
 function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.view}>
-          <MethodInput />
-          <MethodParams />
-          <StatusBar style='light' />
-        </View>
-      </SafeAreaView>
+      {/* <SafeAreaView style={styles.container}> */}
+        <NavigationContainer theme={DarkTheme}>
+          <View style={{flex: 1, backgroundColor: 'black'}}>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name='Home' component={HomeScreen} />
+              <Stack.Screen name='ConstructorEditor' component={EditorScreen} />
+            </Stack.Navigator>
+          </View>
+        </NavigationContainer>
+        <StatusBar style='light' />
+      {/* </SafeAreaView> */}
     </Provider>
   )
 }
@@ -38,13 +46,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  view: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    padding: 30,
-    paddingTop: 50,
-    alignItems: 'center'
-  },
+  }
 })
