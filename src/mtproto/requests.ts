@@ -2,8 +2,23 @@ import type { RequestSlice } from '../redux/slices/request'
 import tlschema from '../tl-schema.json'
 import { getParamInputType } from './schemaParamParser'
 
-export function call(methodName: string, params: object) {
-  
+const logging = {
+  log(...content: (string | object)[]) {
+    console.log(...content)
+  },
+  error(...content: (string | object)[]) {
+    console.error(...content)
+  }
+}
+
+export async function call(methodName: string, params: object) {
+  logging.log('Executing', methodName, 'with params', params)
+  try {
+    const result = await global.api.call(methodName, params)
+    logging.log(result)
+  } catch(e) {
+    logging.error(JSON.stringify(e))
+  }
 }
 
 export function parseFields(defaults: { [key: string]: any }, fields: RequestSlice['params']): object {
