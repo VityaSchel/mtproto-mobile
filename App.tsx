@@ -25,17 +25,15 @@ export default function Main() {
 function App() {
   return (
     <Provider store={store}>
-      {/* <SafeAreaView style={styles.container}> */}
-        <NavigationContainer theme={DarkTheme}>
-          <View style={{flex: 1, backgroundColor: 'black'}}>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name='Home' component={HomeScreen} />
-              <Stack.Screen name='ConstructorEditor' component={EditorScreen} />
-            </Stack.Navigator>
-          </View>
-        </NavigationContainer>
-        <StatusBar style='light' />
-      {/* </SafeAreaView> */}
+      <NavigationContainer theme={DarkTheme}>
+        <View style={{flex: 1, backgroundColor: 'black'}}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='ConstructorEditor' component={EditorScreen} />
+          </Stack.Navigator>
+        </View>
+      </NavigationContainer>
+      <StatusBar style='light' />
     </Provider>
   )
 }

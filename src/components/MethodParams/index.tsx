@@ -2,7 +2,6 @@ import clone from 'just-clone'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { Button, IconButton, Text } from 'react-native-paper'
-import { useAppSelector } from '../../redux/store'
 import tlschema from '../../tl-schema.json'
 import { BooleanField, FieldProps, NumberField, StringField } from './fields'
 import styles from './styles'
@@ -11,23 +10,12 @@ import { nanoid } from 'nanoid'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
 
-export default function MethodParams() {
-  const request = useAppSelector(selector => selector.request)
-  const method = tlschema.methods.find(m => m.method === request.method)
-  
-  if(!method) return (
-    <Text>
-      Select method first
-    </Text>
-  )
-
-  const methodParams = method.params
-
+export default function MethodParams(props: { methodParams: { name: string, type: string }[], prefix: string }) {
   return (
     <ScrollView style={styles.params} nestedScrollEnabled>
-      {methodParams
+      {props.methodParams
         .filter(param => !['!X', '#'].includes(param.type))
-        .map((param, i) => <Param param={param} key={i} />)}
+        .map((param, i) => <Param param={param} prefix={props.prefix} key={i} />)}
     </ScrollView>
   )
 }
@@ -68,11 +56,11 @@ const getParamInputType = (mtprotoType: string): ParamTypeResult => {
   }
 }
 
-function Param(props: { param: ParamAlias }) {
+function Param(props: { param: ParamAlias, prefix: string }) {
   const navigation = useNavigation()
   const paramType = getParamInputType(props.param.type)
 
-  const sharedProps: FieldProps = { fieldID: props.param.name, default: paramType.optionalDefault }
+  const sharedProps: FieldProps = { fieldID: props.prefix + props.param.name, default: paramType.optionalDefault }
 
   const paramComponent = paramType.isConstructor
     ? (
@@ -81,7 +69,7 @@ function Param(props: { param: ParamAlias }) {
         <Button 
           // icon='playlist-edit' 
           mode='outlined' 
-          onPress={() => navigation.push('ConstructorEditor', { test: paramType.type })}
+          onPress={() => navigation.push('ConstructorEditor', { constructorType: paramType.type, prefix: props.prefix })}
           style={{ flex: 1 }}
           compact
         >

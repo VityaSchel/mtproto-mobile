@@ -1,13 +1,13 @@
 import { View } from 'react-native'
 import MethodInput from '../components/MethodInput'
-import MethodParams from '../components/MethodParams'
-import styles from './styles'
+import RootParams from '../components/MethodParams/RootParams'
+import styles from '../globalStyles'
 
 export default function HomeScreen() {
   return (
     <View style={styles.view}>
       <MethodInput />
-      <MethodParams />
+      <RootParams />
     </View>
   )
 }

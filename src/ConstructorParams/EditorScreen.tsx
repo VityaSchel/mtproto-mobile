@@ -1,11 +1,26 @@
-import { NavigationProp, useRoute } from '@react-navigation/native'
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
 import ConstructorParamsEditor from './editor'
+import styles from '../globalStyles'
+import { View } from 'react-native'
+import { Appbar, Text } from 'react-native-paper'
 
-export default function EditorScreen(props: { navigation: NavigationProp<{}> }) {
+export default function EditorScreen() {
   const route = useRoute()
-  console.log(route.params)
+  const navigation = useNavigation()
+  if(!route.params) throw 'No params passed to EditorScreen'
+  type EditorScreenParams = { constructorType: string, prefix: string }
+  const params = route.params as EditorScreenParams
 
   return (
-    <ConstructorParamsEditor  /> 
+    <View style={styles.view}>
+      <Appbar.Header style={{ width: '100%', backgroundColor: '#000' }} statusBarHeight={0}>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title={params.constructorType} />
+      </Appbar.Header>
+      <ConstructorParamsEditor
+        fieldIDPrefix={params.prefix + '_constructor'}
+        constructorType={params.constructorType}
+      />
+    </View>
   )
 }
