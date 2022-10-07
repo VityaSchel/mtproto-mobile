@@ -9,6 +9,8 @@ import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { setParam } from '../../redux/slices/request'
 
 export default function MethodParams(props: { methodParams: { name: string, type: string }[], prefix: string }) {
   return (
@@ -48,7 +50,7 @@ const getParamInputType = (mtprotoType: string): ParamTypeResult => {
   } else if('Bool' === mtprotoType) {
     return { ...result, type: 'boolean' }
   } else if(['true', 'false'].includes(mtprotoType)) {
-    return { ...result, type: 'boolean', optionalDefault: mtprotoType }
+    return { ...result, type: 'boolean', optionalDefault: mtprotoType === 'true' }
   } else if(/^\d+$/.test(mtprotoType)) {
     return { ...result, type: 'number', optionalDefault: mtprotoType }
   } else {
@@ -104,7 +106,15 @@ function Param(props: { param: ParamAlias, prefix: string }) {
 }
 
 function ArrayOfParams(props: { children: JSX.Element, fieldProps: FieldProps }) {
-  const [value, setValue] = React.useState<string[]>([])
+  // const [value, setValue] = React.useState<string[]>([])
+  const request = useAppSelector(store => store.request)
+  const arrayFieldID = `_vector_header_${props.fieldProps.fieldID}`
+  const value = request.params[arrayFieldID] as string[] ?? []
+  const dispatch = useAppDispatch()
+
+  const setValue = (newValues: string[]) => {
+    dispatch(setParam({ fieldID: arrayFieldID, value: { type: 'vector', value: newValues } }))
+  }
 
   const addItem = () => {
     setValue(value.concat(nanoid()))
@@ -134,7 +144,7 @@ function ArrayOfParams(props: { children: JSX.Element, fieldProps: FieldProps })
               ...props.children, 
               props: { 
                 ...props.children.props, 
-                fieldID: `_vector_${props.fieldProps.fieldID}_${fieldArrayID}` 
+                fieldID: `_vector_item_${props.fieldProps.fieldID}_${fieldArrayID}` 
               }
             }}
             <IconButton 

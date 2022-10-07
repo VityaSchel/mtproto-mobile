@@ -18,7 +18,7 @@ export default function EditorScreen() {
         <Appbar.Content title={params.field + ': ' + params.constructorType} />
       </Appbar.Header>
       <ConstructorParamsEditor
-        fieldIDPrefix={`${params.prefix}_constructor:${params.field}_`}
+        fieldIDPrefix={`${params.prefix}_constructor<${params.field}>`}
         constructorType={params.constructorType}
       />
     </View>

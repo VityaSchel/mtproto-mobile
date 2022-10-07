@@ -11,15 +11,13 @@ export default function ConstructorParamsEditor(props: { constructorType: string
   const request = useAppSelector(selector => selector.request)
   const dispatch = useAppDispatch()
   const subConstructors = tlschema.constructors.filter(c => c.type === props.constructorType)
-  const subTypeFieldID = `${props.fieldIDPrefix}_${props.constructorType}_subType`
+  const subTypeFieldID = `${props.fieldIDPrefix}_subType`
   const selectedSubConstructorPredicate = request.params[subTypeFieldID] as string
   const selectedSubConstructor = subConstructors.find(sc => sc.predicate == selectedSubConstructorPredicate)
 
   const setValue = (predicate: string) => {
     dispatch(setParam({ fieldID: subTypeFieldID, value: { type: 'string', value: predicate }}))
   }
-
-  console.log(subConstructors)
 
   return (
     <View style={styles.view}>
@@ -44,7 +42,7 @@ export default function ConstructorParamsEditor(props: { constructorType: string
         {selectedSubConstructor && (
           <MethodParams 
             methodParams={selectedSubConstructor.params} 
-            prefix={`${props.fieldIDPrefix}_${props.constructorType}_value_`}
+            prefix={`${props.fieldIDPrefix}_value_`}
           />
         )}
       </ScrollView>

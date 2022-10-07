@@ -5,11 +5,19 @@ import { resetData } from '../../redux/slices/request'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import tlschema from '../../tl-schema.json'
 import styles from './styles'
+import { call, parseFields } from '../../mtproto/requests'
 
 export default function SendRequest() {
   const request = useAppSelector(selector => selector.request)
   const method = tlschema.methods.find(m => m.method === request.method)
   const dispatch = useAppDispatch()
+
+  const dispatchRequest = async () => {
+    const methodName = request.method
+    const params = parseFields(methodName, request.params)
+    console.log('params', params)
+    // console.log(await call(methodName, params))
+  }
   
   if(!method) return <></>
 
@@ -19,16 +27,13 @@ export default function SendRequest() {
         mode='contained'
         icon='send'
         style={styles.sendRequest}
-        onPress={() => console.log(request)}
+        onPress={dispatchRequest}
       >
         Send
       </Button>
       <Button
-        // icon=''
         mode='contained-tonal'
-        // size={30}
         onPress={() => dispatch(resetData())}
-        // compact
       >
         <Icon name='backspace-outline' size={20} />
       </Button>

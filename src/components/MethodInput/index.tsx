@@ -6,7 +6,7 @@ import { TextInput, Menu, Surface } from 'react-native-paper'
 import tlSchema from '../../tl-schema.json'
 import styles from './styles'
 import { useAppDispatch } from '../../redux/store'
-import { resetMethod, setMethod } from '../../redux/slices/request'
+import { resetMethod, resetParams, setMethod } from '../../redux/slices/request'
 
 type Method = {
     id: string
@@ -43,6 +43,10 @@ export default function MethodInput() {
   }
 
   const onChangeText = (query) => {
+    if(value !== query) {
+      dispatch(resetParams())
+    }
+
     setValue(query)
     const suggestions = []
     let i = 0
