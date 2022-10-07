@@ -5,7 +5,7 @@ import { resetData } from '../../redux/slices/request'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import tlschema from '../../tl-schema.json'
 import styles from './styles'
-import { call, parseFields } from '../../mtproto/requests'
+import { call, getDefaults, parseFields } from '../../mtproto/requests'
 
 export default function SendRequest() {
   const request = useAppSelector(selector => selector.request)
@@ -13,8 +13,10 @@ export default function SendRequest() {
   const dispatch = useAppDispatch()
 
   const dispatchRequest = async () => {
-    const methodName = request.method
-    const params = parseFields(methodName, request.params)
+    const methodName = request.method as string
+    const defaults = getDefaults(methodName)
+    console.log('defaults', defaults)
+    const params = parseFields(defaults, request.params)
     console.log('params', params)
     // console.log(await call(methodName, params))
   }

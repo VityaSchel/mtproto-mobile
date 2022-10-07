@@ -1,13 +1,12 @@
 import type { RequestSlice } from '../redux/slices/request'
 import tlschema from '../tl-schema.json'
+import { getParamInputType } from './schemaParamParser'
 
 export function call(methodName: string, params: object) {
   
 }
 
-export function parseFields(methodName: RequestSlice['method'], fields: RequestSlice['params']): object {
-  // const method = tlschema.methods.find(m => m.method === methodName)
-  // method.params
+export function parseFields(defaults: { [key: string]: any }, fields: RequestSlice['params']): object {
   // console.log(fields)
   const entries = Object.entries(fields)
   const result: { [key: string]: any } = {}
@@ -33,11 +32,24 @@ export function parseFields(methodName: RequestSlice['method'], fields: RequestS
       const innerFieldKey = innerFieldKeyRaw.match(regex)[1]
       values[innerFieldKey] = innerFieldValue
     }
-    console.log(values)
     result[fieldID] = {
       _: constructorSubType,
-      ...values
+      ...parseFields({}, values)
     }
+  }
+
+  return result
+}
+
+export function getDefaults(methodName: string): { [key: string]: any } {
+  const result: { [key: string]: any } = {}
+  const method = tlschema.methods.find(m => m.method === methodName)
+  if(!method) return {}
+
+  for(const param of method.params) {
+    const paramType = getParamInputType(param.type)
+    if(paramType.optionalDefault !== null)
+      result[param.name] = paramType.optionalDefault
   }
 
   return result
