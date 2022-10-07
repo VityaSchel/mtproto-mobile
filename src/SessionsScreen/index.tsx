@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { nanoid } from 'nanoid'
 import clone from 'just-clone'
+import { initializeAPI } from '../mtproto'
 
 type Session = {
   id: string
@@ -18,8 +19,9 @@ export default function SessionsScreen() {
   const [sessions, setSessions] = React.useState<Session[]>([])
   const navigation = useNavigation()
 
-  const selectSession = (index: number) => {
-    global.sessionID = sessions[index].id
+  const selectSession = async (index: number) => {
+    await initializeAPI()
+    global.api._mtproto_session_id = sessions[index].id
     navigation.replace('Home')
   }
 
@@ -29,11 +31,25 @@ export default function SessionsScreen() {
     setSessions(newSessions)
   }
 
-  const removeSession = (index: number) => {
+  const removeSession = async (index: number) => {
     const newSessions = clone(sessions)
-    newSessions.splice(index, 1)
+    const removedSession = newSessions.splice(index, 1)[0]
+    const keys = await AsyncStorage.getAllKeys()
+    const targetKeys = keys.filter(k => k.startsWith(`mtproto_data_session${removedSession.id}_`))
+    if(targetKeys.length) await AsyncStorage.multiRemove(targetKeys)
     AsyncStorage.setItem('sessions', JSON.stringify(newSessions))
     setSessions(newSessions)
+  }
+
+  React.useEffect(() => { checkSettings() }, [])
+
+  const checkSettings = async () => {
+    if(
+      (await AsyncStorage.getItem('app_api_id')) === null 
+      || (await AsyncStorage.getItem('app_api_hash')) === null
+    ) {
+      navigation.replace('Settings')
+    }
   }
 
   return (
@@ -62,6 +78,11 @@ export default function SessionsScreen() {
             onPress={newSession}
           >New session</Button>
         )}
+        <Button
+          mode='contained-tonal'
+          onPress={() => navigation.push('Settings')}
+          style={{ marginTop: 10 }}
+        >App API settings</Button>
       </View>
     </View>
   )

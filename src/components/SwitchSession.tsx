@@ -5,6 +5,7 @@ export default function SwitchSessionButton() {
   const navigation = useNavigation()
 
   const disconnectAndSwitchSession = () => {
+    global.api.close()
     navigation.replace('Sessions')
   }
 

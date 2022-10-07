@@ -15,10 +15,8 @@ export default function SendRequest() {
   const dispatchRequest = async () => {
     const methodName = request.method as string
     const defaults = getDefaults(methodName)
-    console.log('defaults', defaults)
     const params = parseFields(defaults, request.params)
-    console.log('params', params)
-    // console.log(await call(methodName, params))
+    await call(methodName, params)
   }
   
   if(!method) return <></>
