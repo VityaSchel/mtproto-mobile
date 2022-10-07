@@ -9,4 +9,11 @@ export default StyleSheet.create({
     paddingTop: 50,
     alignItems: 'center'
   },
+  centeredView: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })

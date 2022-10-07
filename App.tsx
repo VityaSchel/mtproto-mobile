@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import HomeScreen from './src/HomeScreen'
 import EditorScreen from './src/ConstructorParams/EditorScreen'
+import SessionsScreen from './src/SessionsScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +29,7 @@ function App() {
       <NavigationContainer theme={DarkTheme}>
         <View style={{flex: 1, backgroundColor: 'black'}}>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='Sessions' component={SessionsScreen} />
             <Stack.Screen name='Home' component={HomeScreen} />
             <Stack.Screen name='ConstructorEditor' component={EditorScreen} />
           </Stack.Navigator>
