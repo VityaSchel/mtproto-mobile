@@ -15,6 +15,12 @@ export default function RootParams() {
     </Text>
   )
 
+  if(!method.params.length) return (
+    <Text style={styles.noParams}>
+      This method has no params
+    </Text>
+  )
+
   return (
     <MethodParams methodParams={method.params} prefix='' />
   )

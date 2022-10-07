@@ -5,6 +5,11 @@ export default StyleSheet.create({
     marginTop: 20,
     fontSize: 20
   },
+  noParams: {
+    marginTop: 30,
+    fontSize: 16,
+    marginBottom: 'auto'
+  },
   params: {
     display: 'flex',
     width: '100%',
