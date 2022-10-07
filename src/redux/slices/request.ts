@@ -18,7 +18,6 @@ type ParamNewValue = { type: 'number', value: string | number | null }
   | { type: 'string', value: string | null }
   | { type: 'boolean', value: boolean | null }
   | { type: 'bytes', value: string[] | null }
-  // | { type: 'constructor', value: number }
 
 export const requestSlice = createSlice({
   name: 'request',
@@ -32,11 +31,15 @@ export const requestSlice = createSlice({
     },
     setParam: (state, action: PayloadAction<{ fieldID: string, value: ParamNewValue }>) => {
       state.params[action.payload.fieldID] = action.payload.value.value
+    },
+    resetData: (state) => {
+      state.method = null
+      state.params = {}
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setMethod, resetMethod, setParam } = requestSlice.actions
+export const { setMethod, resetMethod, setParam, resetData } = requestSlice.actions
 
 export default requestSlice.reducer

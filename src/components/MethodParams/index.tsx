@@ -69,7 +69,13 @@ function Param(props: { param: ParamAlias, prefix: string }) {
         <Button 
           // icon='playlist-edit' 
           mode='outlined' 
-          onPress={() => navigation.push('ConstructorEditor', { constructorType: paramType.type, prefix: props.prefix })}
+          onPress={() => {
+            navigation.push('ConstructorEditor', { 
+              constructorType: paramType.type,
+              prefix: props.prefix,
+              field: props.param.name
+            })
+          }}
           style={{ flex: 1 }}
           compact
         >

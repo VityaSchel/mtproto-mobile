@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
+  selectMethodFirst: {
+    marginTop: 20,
+    fontSize: 20
+  },
   params: {
     display: 'flex',
     width: '100%',
