@@ -23,20 +23,23 @@ export default function SendRequest() {
 
   return (
     <View style={styles.buttons}>
-      <Button
-        mode='contained'
-        icon='send'
-        style={styles.sendRequest}
-        onPress={dispatchRequest}
-      >
-        Send
-      </Button>
-      <Button
-        mode='contained-tonal'
-        onPress={() => dispatch(resetData())}
-      >
-        <Icon name='backspace-outline' size={20} />
-      </Button>
+      <View style={styles.buttonsRow}>
+        <Button
+          mode='contained'
+          icon='send'
+          style={styles.sendRequest}
+          onPress={dispatchRequest}
+        >
+          Send
+        </Button>
+        <Button
+          mode='contained-tonal'
+          onPress={() => dispatch(resetData())}
+        >
+          <Icon name='backspace-outline' size={20} />
+        </Button>
+      </View>
+      <Button mode='contained-tonal' onPress={() => global.api.openConsole()}>Console</Button>
     </View>
   )
 }

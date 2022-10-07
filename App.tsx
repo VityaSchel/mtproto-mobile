@@ -11,6 +11,8 @@ import HomeScreen from './src/HomeScreen'
 import EditorScreen from './src/ConstructorParams/EditorScreen'
 import SessionsScreen from './src/SessionsScreen'
 import SettingsScreen from './src/SettingsScreen'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 const Stack = createNativeStackNavigator()
 
@@ -18,7 +20,11 @@ export default function Main() {
   return (
     <UIKittenProvider {...eva} theme={eva.dark}>
       <PaperProvider theme={MD3DarkTheme}>
-        <App />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <App />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
       </PaperProvider>
     </UIKittenProvider>
   )

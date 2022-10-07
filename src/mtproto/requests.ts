@@ -2,16 +2,21 @@ import type { RequestSlice } from '../redux/slices/request'
 import tlschema from '../tl-schema.json'
 import { getParamInputType } from './schemaParamParser'
 
+global.apiLogger = []
+
 const logging = {
   log(...content: (string | object)[]) {
     console.log(...content)
+    global.apiLogger.push(({ type: 'info', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c)).join(' ') }))
   },
   error(...content: (string | object)[]) {
     console.error(...content)
+    global.apiLogger.push(({ type: 'error', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c)).join(' ') }))
   }
 }
 
 export async function call(methodName: string, params: object) {
+  global.api.openConsole()
   logging.log('Executing', methodName, 'with params', params)
   try {
     const result = await global.api.call(methodName, params)

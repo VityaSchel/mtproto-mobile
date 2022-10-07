@@ -16,6 +16,7 @@ export default function ConstructorParamsEditor(props: { constructorType: string
   const selectedSubConstructor = subConstructors.find(sc => sc.predicate == selectedSubConstructorPredicate)
 
   const setValue = (predicate: string) => {
+    // TODO: clear params from current constructor subtype (set to null every param from this subtype)
     dispatch(setParam({ fieldID: subTypeFieldID, value: { type: 'string', value: predicate }}))
   }
 
@@ -27,10 +28,6 @@ export default function ConstructorParamsEditor(props: { constructorType: string
           value={selectedSubConstructorPredicate}
         >
           {subConstructors.map((constructor, index) => (
-            // <View key={constructor.id} style={styles.subTypeSelector}>
-            //   <RadioButton value={constructor.predicate} />
-            //   <Text onPress={() => setValue(constructor.predicate)}>{constructor.predicate}</Text>
-            // </View>
             <RadioButton.Item 
               key={constructor.id}
               label={constructor.predicate} 

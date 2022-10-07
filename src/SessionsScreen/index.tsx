@@ -26,7 +26,7 @@ export default function SessionsScreen() {
   }
 
   const newSession = () => {
-    const newSessions = [...sessions, { createdAt: new Date(), id: nanoid(6) }]
+    const newSessions = [...sessions, { createdAt: Date.now(), id: nanoid(6) }]
     AsyncStorage.setItem('sessions', JSON.stringify(newSessions))
     setSessions(newSessions)
   }
@@ -41,7 +41,14 @@ export default function SessionsScreen() {
     setSessions(newSessions)
   }
 
-  React.useEffect(() => { checkSettings() }, [])
+  React.useEffect(() => { 
+    checkSettings()
+    AsyncStorage.getItem('sessions').then(data => {
+      if(data) {
+        setSessions(JSON.parse(data))
+      }
+    })
+  }, [])
 
   const checkSettings = async () => {
     if(
