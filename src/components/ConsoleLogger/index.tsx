@@ -6,10 +6,10 @@ import styles from './styles'
 import clone from 'just-clone'
 
 export default function ConsoleLogger() {
+  const [logs, setLogs] = React.useState([])
+
   const bottomSheetRef = React.useRef<BottomSheetModal>(null)
-
   const snapPoints = React.useMemo(() => ['80%'], [])
-
   const handleSheetChanges = React.useCallback((index: number) => {
     console.log('handleSheetChanges', index)
   }, [])
@@ -19,23 +19,11 @@ export default function ConsoleLogger() {
     bottomSheetRef.current?.present()
   }
 
-  const renderBackdrop = React.useCallback(
-    props => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={null}
-        appearsOnIndex={0}
-      />
-    ),
-    []
-  )
-
-  // const renderBackground = React.useCallback(
-  //   props => (
-  //     <View style={styles.sheet} />
-  //   ),
-  //   []
-  // )
+  React.useEffect(() => {
+    global.apiLoggerUpdate = () => {
+      setLogs(clone(global.apiLogger).reverse())
+    }
+  }, [setLogs])
 
   const CustomBackground: React.FC<BottomSheetBackgroundProps> = () => (
     <View style={styles.sheet} />
@@ -46,7 +34,7 @@ export default function ConsoleLogger() {
       return (
         <View>
           <Text style={{ color: item.type === 'error' ? 'red' : 'white' }}>{item.content}</Text>
-          {index !== global.apiLogger.length - 1 && <Divider style={{ marginVertical: 10 }} />}
+          {(index !== (logs.length - 1)) && <Divider style={{ marginVertical: 10 }} />}
         </View>
       )
     },
@@ -66,11 +54,12 @@ export default function ConsoleLogger() {
       style={styles.sheet}
     >
       <View style={{ padding: 30, width: '100%', height: '100%' }}>
-        <Button mode='contained' onPress={() => global.apiLogger = []}>Clear</Button>
+        <Button mode='contained' onPress={() => { global.apiLogger = []; global.apiLoggerUpdate() }}>Clear</Button>
         <BottomSheetFlatList
-          data={clone(global.apiLogger).reverse()}
+          data={logs}
           keyExtractor={(_, i) => String(i)}
           renderItem={renderItem}
+          contentContainerStyle={{ paddingTop: 20 }}
         />
       </View>
     </BottomSheetModal>
