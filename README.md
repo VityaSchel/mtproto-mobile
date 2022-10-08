@@ -1,8 +1,8 @@
 # MTProto Mobile
 
-Mobile app-wrapper for MTProto for executing requests to Telegram Core API.
+Mobile app with wrapper for MTProto that allows you to make requests to Telegram Core API (mtproto).
 
-![Screenshot_20221008-000532_Expo Go](https://user-images.githubusercontent.com/59040542/194644928-3ecc6958-36c7-4cd7-a5af-aebe0dc4105f.jpg)
+![EXPO GO screenshot abobka](https://user-images.githubusercontent.com/59040542/194699698-7a3a14f1-361a-47bd-a145-f919f44d6d72.png)
 
 Made with Expo (react-native) and TypeScript. Uses [@mtproto/core](https://mtproto-core.js.org/) in backend.
 
