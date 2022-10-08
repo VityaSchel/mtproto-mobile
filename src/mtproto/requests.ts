@@ -29,7 +29,6 @@ export async function call(methodName: string, params: object) {
 }
 
 export function parseFields(defaults: { [key: string]: any }, fields: RequestSlice['params']): object {
-  // console.log(fields)
   const entries = Object.entries(fields)
   const result: { [key: string]: any } = {}
   
@@ -46,7 +45,7 @@ export function parseFields(defaults: { [key: string]: any }, fields: RequestSli
   const constructorFields = entries.filter(([key]) => /^_constructor<[^>]+>_subType$/.test(key))
   for(const [fieldKeyRaw, subType] of constructorFields) {
     const fieldID = fieldKeyRaw.match(/^_constructor<([^>]+)>/)[1]
-    const constructorSubType = subType//fields[`_constructor<${fieldID}>_subType`]
+    const constructorSubType = subType
     const values: { [key: string]: any } = {}
     const constructorFields = entries.filter(([key]) => key.startsWith(`_constructor<${fieldID}>_value_`))
     for(const [innerFieldKeyRaw, innerFieldValue] of constructorFields) {

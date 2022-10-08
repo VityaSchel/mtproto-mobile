@@ -2,7 +2,6 @@ import React from 'react'
 import { View } from 'react-native'
 import type { TextInput as ReactNativeTextInput } from 'react-native'
 import { TextInput, Menu, Surface } from 'react-native-paper'
-// import type { NativeTextInput } from 'react-native'
 import tlSchema from '../../tl-schema.json'
 import styles from './styles'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
@@ -34,14 +33,6 @@ export default function MethodInput() {
     if(!methodInputRef.current?.isFocused())
       setValue(methodName)
   }, [methodName])
-
-  // React.useEffect(() => {
-  //   if(isValidMethodName) {
-  //     dispatch(setMethod(value))
-  //   } else {
-  //     dispatch(resetMethod())
-  //   }
-  // }, [isValidMethodName])
 
   const onSelect = (item: Method) => {
     setValue(item.method)

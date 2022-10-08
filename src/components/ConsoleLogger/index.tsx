@@ -10,9 +10,6 @@ export default function ConsoleLogger() {
 
   const bottomSheetRef = React.useRef<BottomSheetModal>(null)
   const snapPoints = React.useMemo(() => ['80%'], [])
-  const handleSheetChanges = React.useCallback((index: number) => {
-    console.log('handleSheetChanges', index)
-  }, [])
 
   // don't care + didn't ask + shut up
   global.api.openConsole = () => {
@@ -46,8 +43,6 @@ export default function ConsoleLogger() {
       ref={bottomSheetRef}
       index={0}
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-      // backdropComponent={renderBackdrop}
       handleIndicatorStyle={{ backgroundColor: '#fff' }}
       backgroundComponent={CustomBackground}
       enablePanDownToClose

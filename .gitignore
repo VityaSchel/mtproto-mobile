@@ -14,3 +14,5 @@ web-build/
 .DS_Store
 
 *.keystore
+*.aab
+*.apk

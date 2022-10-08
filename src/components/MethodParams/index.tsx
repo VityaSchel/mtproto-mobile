@@ -38,8 +38,7 @@ function Param(props: { param: ParamAlias, prefix: string }) {
     ? (
       <View>
         {/* {!paramType.array && <Text style={{ marginRight: 10 }}>[_]</Text>} */}
-        <Button 
-          // icon='playlist-edit' 
+        <Button
           mode='outlined' 
           onPress={() => {
             navigation.push('ConstructorEditor', { 
@@ -76,7 +75,6 @@ function Param(props: { param: ParamAlias, prefix: string }) {
 }
 
 function ArrayOfParams(props: { children: JSX.Element, fieldProps: FieldProps }) {
-  // const [value, setValue] = React.useState<string[]>([])
   const request = useAppSelector(store => store.request)
   const arrayFieldID = `_vector_header_${props.fieldProps.fieldID}`
   const value = request.params[arrayFieldID] as string[] ?? []
