@@ -1,6 +1,6 @@
 diff --git a/node_modules/@mtproto/core/envs/react-native/get-local-storage.js b/node_modules/@mtproto/core/envs/react-native/get-local-storage.js
 new file mode 100644
-index 0000000..504ac90
+index 0000000..03608d6
 --- /dev/null
 +++ b/node_modules/@mtproto/core/envs/react-native/get-local-storage.js
 @@ -0,0 +1,16 @@
@@ -14,7 +14,7 @@ index 0000000..504ac90
 +      return AsyncStorage.setItem(`${prefix}_session${global.api._mtproto_session_id}_${key}`, value)
 +    },
 +    get(key){
-+      AsyncStorage.getItem(`${prefix}_session${global.api._mtproto_session_id}_${key}`)
++      return AsyncStorage.getItem(`${prefix}_session${global.api._mtproto_session_id}_${key}`)
 +    }
 +  }
 +}

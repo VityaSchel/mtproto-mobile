@@ -18,27 +18,27 @@ export default function BottomButtonsRow() {
     const params = parseFields(defaults, request.params)
     await call(methodName, params)
   }
-  
-  if(!method) return <></>
 
   return (
-    <View style={styles.buttons}>
-      <View style={styles.buttonsRow}>
-        <Button
-          mode='contained'
-          icon='send'
-          style={styles.sendRequest}
-          onPress={dispatchRequest}
-        >
-          Send
-        </Button>
-        <Button
-          mode='contained-tonal'
-          onPress={() => dispatch(resetData())}
-        >
-          <Icon name='backspace-outline' size={20} />
-        </Button>
-      </View>
+    <View style={{ ...styles.buttons, marginTop: method ? 10 : 'auto' }}>
+      {method && (
+        <View style={styles.buttonsRow}>
+          <Button
+            mode='contained'
+            icon='send'
+            style={styles.sendRequest}
+            onPress={dispatchRequest}
+          >
+            Send
+          </Button>
+          <Button
+            mode='contained-tonal'
+            onPress={() => dispatch(resetData())}
+          >
+            <Icon name='backspace-outline' size={20} />
+          </Button>
+        </View>
+      )}
       <Button mode='contained-tonal' onPress={() => global.api.openConsole()}>Console</Button>
     </View>
   )

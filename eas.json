@@ -1,0 +1,31 @@
+{
+  "cli": {
+    "version": ">= 0.55.1"
+  },
+  "build": {
+    "development": {
+      "credentialsSource": "local",
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "ANDROID_SDK_ROOT": "/usr/local/bin/android-sdk"
+      }
+    },
+    "preview": {
+      "credentialsSource": "local",
+      "distribution": "internal",
+      "env": {
+        "ANDROID_SDK_ROOT": "/usr/local/bin/android-sdk"
+      }
+    },
+    "production": {
+      "credentialsSource": "local",
+      "env": {
+        "ANDROID_SDK_ROOT": "/usr/local/bin/android-sdk"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

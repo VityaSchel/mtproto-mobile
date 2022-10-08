@@ -35,25 +35,32 @@ export default function MethodInput() {
       setValue(methodName)
   }, [methodName])
 
-  React.useEffect(() => {
-    if(isValidMethodName) {
-      dispatch(setMethod(value))
-    } else {
-      dispatch(resetMethod())
-    }
-  }, [isValidMethodName])
+  // React.useEffect(() => {
+  //   if(isValidMethodName) {
+  //     dispatch(setMethod(value))
+  //   } else {
+  //     dispatch(resetMethod())
+  //   }
+  // }, [isValidMethodName])
 
   const onSelect = (item: Method) => {
     setValue(item.method)
+    dispatch(setMethod(item.method))
     methodInputRef.current.blur()
   }
 
-  const onChangeText = (query) => {
+  const onChangeText = (query: string) => {
     if(value !== query) {
       dispatch(resetParams())
     }
 
     setValue(query)
+    if(methodsNames.includes(query)) {
+      dispatch(setMethod(query))
+    } else {
+      dispatch(resetMethod())
+    }
+    
     const suggestions = []
     let i = 0
     while(suggestions.length < 5) {

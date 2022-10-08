@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native'
 import { Button, Modal, Portal, Text } from 'react-native-paper'
 import styles from './styles'
 import { useAppDispatch } from '../../redux/store'
-import { setMethod } from '../../redux/slices/request'
+import { resetData, setMethod } from '../../redux/slices/request'
 
 export default function TopButtonsRow() {
   const navigation = useNavigation()
@@ -12,6 +12,7 @@ export default function TopButtonsRow() {
   const dispatch = useAppDispatch()
 
   const disconnectAndSwitchSession = () => {
+    dispatch(resetData())
     global.api.close()
     navigation.replace('Sessions')
   }
