@@ -29,7 +29,10 @@ function Param(props: { param: ParamAlias, prefix: string }) {
   const navigation = useNavigation()
   const paramType = getParamInputType(props.param.type)
 
-  const sharedProps: FieldProps = { fieldID: props.prefix + props.param.name, default: paramType.optionalDefault }
+  const sharedProps: FieldProps = { 
+    fieldID: props.prefix + props.param.name, 
+    default: paramType.optionalDefault 
+  }
 
   const paramComponent = paramType.isConstructor
     ? (

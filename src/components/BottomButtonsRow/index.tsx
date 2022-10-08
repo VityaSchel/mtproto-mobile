@@ -7,7 +7,7 @@ import tlschema from '../../tl-schema.json'
 import styles from './styles'
 import { call, getDefaults, parseFields } from '../../mtproto/requests'
 
-export default function SendRequest() {
+export default function BottomButtonsRow() {
   const request = useAppSelector(selector => selector.request)
   const method = tlschema.methods.find(m => m.method === request.method)
   const dispatch = useAppDispatch()

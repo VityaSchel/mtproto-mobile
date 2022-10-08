@@ -8,5 +8,11 @@ export default StyleSheet.create({
   input: {
     width: '100%',
     marginBottom: 20
+  },
+  rowFlex: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20
   }
 })

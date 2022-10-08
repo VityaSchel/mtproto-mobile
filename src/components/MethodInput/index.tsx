@@ -5,7 +5,7 @@ import { TextInput, Menu, Surface } from 'react-native-paper'
 // import type { NativeTextInput } from 'react-native'
 import tlSchema from '../../tl-schema.json'
 import styles from './styles'
-import { useAppDispatch } from '../../redux/store'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { resetMethod, resetParams, setMethod } from '../../redux/slices/request'
 
 type Method = {
@@ -23,11 +23,17 @@ const methods = tlSchema.methods
 const methodsNames = tlSchema.methods.map(m => m.method)
 
 export default function MethodInput() {
-  const [value, setValue] = React.useState(null)
+  const [value, setValue] = React.useState<string | null>(null)
   const isValidMethodName = methodsNames.includes(value)
   const [data, setData] = React.useState<Method['method'][]>(methodsNames)
   const methodInputRef = React.useRef<ReactNativeTextInput>()
+  const methodName = useAppSelector(store => store.request.method)
   const dispatch = useAppDispatch()
+
+  React.useEffect(() => {
+    if(!methodInputRef.current?.isFocused())
+      setValue(methodName)
+  }, [methodName])
 
   React.useEffect(() => {
     if(isValidMethodName) {

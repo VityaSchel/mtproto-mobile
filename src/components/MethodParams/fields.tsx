@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import { Checkbox, Text, TextInput } from 'react-native-paper'
 import { setParam } from '../../redux/slices/request'
@@ -16,8 +17,12 @@ export function NumberField(props: FieldProps) {
   const setValue = (text: string | number | null) => dispatch(setParam({ fieldID: props.fieldID, value: { type: 'number', value: text } }))
   
   React.useEffect(() => {
-    if(params[props.fieldID] === undefined && props.default !== null) {
-      setValue(props.default)
+    if(params[props.fieldID] === undefined) {
+      if(props.default !== null) {
+        setValue(props.default)
+      } else if(props.fieldID === 'api_id') {
+        AsyncStorage.getItem('app_api_id').then(setValue)
+      }
     }
   }, [])
 
@@ -58,8 +63,12 @@ export function StringField(props: FieldProps) {
   const setValue = (text: string) => dispatch(setParam({ fieldID: props.fieldID, value: { type: 'string', value: text } }))
 
   React.useEffect(() => {
-    if(params[props.fieldID] === undefined && props.default !== null) {
-      setValue(props.default)
+    if(params[props.fieldID] === undefined) {
+      if(props.default !== null) {
+        setValue(props.default)
+      } else if(props.fieldID === 'api_hash') {
+        AsyncStorage.getItem('app_api_hash').then(setValue)
+      }
     }
   }, [])
 
