@@ -7,7 +7,7 @@ global.apiLogger = []
 const logging = {
   log(...content: (string | object)[]) {
     console.log(...content)
-    global.apiLogger.push(({ type: 'info', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c)).join(' ') }))
+    global.apiLogger.push(({ type: 'info', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c, null, 2)).join(' ') }))
     global.apiLoggerUpdate()
   },
   error(...content: (string | object)[]) {

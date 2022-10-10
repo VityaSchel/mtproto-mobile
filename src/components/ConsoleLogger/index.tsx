@@ -30,7 +30,7 @@ export default function ConsoleLogger() {
     ({ item, index }) => {
       return (
         <View>
-          <Text style={{ color: item.type === 'error' ? 'red' : 'white' }} selectable>{item.content}</Text>
+          <Text style={{ color: item.type === 'error' ? 'red' : 'white', ...styles.text }} selectable>{item.content}</Text>
           {(index !== (logs.length - 1)) && <Divider style={{ marginVertical: 10 }} />}
         </View>
       )
