@@ -2,7 +2,7 @@ import clone from 'just-clone'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { Button, IconButton, Text } from 'react-native-paper'
-import { BooleanField, FieldProps, NumberField, StringField } from './fields'
+import { BooleanField, FieldProps, NumberField, StringField, ByteField } from './fields'
 import styles from './styles'
 import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
@@ -60,7 +60,7 @@ function Param(props: { param: ParamAlias, prefix: string }) {
       'number': <NumberField {...sharedProps} />,
       'string': <StringField {...sharedProps} />,
       'boolean': <BooleanField {...sharedProps} />,
-      'bytes': <Text>Bytes type is not supported at the moment</Text>,
+      'bytes': <ByteField {...sharedProps} />,
     }[paramType.type]
   if(paramComponent === undefined) throw 'Unknown param type'
 

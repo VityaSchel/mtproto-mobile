@@ -16,6 +16,10 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10
   },
+  subtitle: {
+    fontWeight: 'bold',
+    marginTop: 10
+  },
   templatesInnerView: {
     // justifyContent: 'flex-start'
     alignItems: 'flex-start'

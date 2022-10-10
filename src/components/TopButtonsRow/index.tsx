@@ -31,6 +31,11 @@ export default function TopButtonsRow() {
     hideModal()
   }
 
+  const openFilesScreen = () => {
+    navigation.push('Files')
+    hideModal()
+  }
+
   return (
     <View style={styles.row}>
       <Button
@@ -54,8 +59,10 @@ export default function TopButtonsRow() {
             <Text>2. Sign in using received code and <Text style={styles.code}>phone_code_hash</Text> from previous step.</Text>
             <Button mode='contained' style={styles.button} onPress={callAuthSignIn}>Call auth.signIn</Button>
             <Text>Most common errors at this moment are <Text style={styles.code}>PHONE_CODE_INVALID</Text> (invalid SMS code), <Text style={styles.code}>SESSION_PASSWORD_NEEDED</Text> (you need to login with 2fa). You may also get successfull response but with <Text style={styles.code}>_: auth.authorizationSignUpRequired</Text> — in that case, you must sign up.</Text>
-            <Text variant='headlineSmall' style={styles.title}>2FA</Text>
+            <Text variant='headlineSmall' style={styles.subtitle}>2FA</Text>
             <Text>Due to errors in react-native crypto modules (such as pbkdf2) and current implementation of @mtproto/core environment in RN, I&apos;ve decided to not include support for 2FA. You must disable it in account settings in order to sign in with MTProto mobile.</Text>
+            <Text variant='headlineSmall' style={styles.subtitle}>Files</Text>
+            <Button mode='contained' style={styles.button} onPress={openFilesScreen}>Download &amp; upload files</Button>
           </ScrollView>
         </Modal>
       </Portal>

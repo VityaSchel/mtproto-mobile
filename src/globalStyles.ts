@@ -15,5 +15,8 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    fontWeight: 'bold'
   }
 })

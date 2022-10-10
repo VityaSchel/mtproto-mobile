@@ -84,6 +84,42 @@ export function StringField(props: FieldProps) {
   )
 }
 
+export function ByteField(props: FieldProps) {
+  const params = useAppSelector(selector => selector.request.params)
+  const dispatch = useAppDispatch()
+  const value = params[props.fieldID] ?? ''
+  const setValue = (text: string | null) => dispatch(setParam({ fieldID: props.fieldID, value: { type: 'bytes', value: JSON.parse(text) } }))
+
+  const onChange = (text: string) => {
+    if(isJSONdeserializable()){
+      setValue(text)
+    } else {
+      setValue(null)
+    }
+  } 
+
+  const isJSONdeserializable = () => {
+    try { 
+      JSON.parse(String(value))
+    } catch(e) {
+      return false
+    }
+    return true
+  }
+
+  return (
+    <TextInput
+      mode='outlined'
+      value={String(value)}
+      onChangeText={onChange}
+      style={styles.field}
+      dense
+      error={value.length && !isJSONdeserializable()}
+      placeholder='JSON-deserializable'
+    />
+  )
+}
+
 export function BooleanField(props: FieldProps) {
   const params = useAppSelector(selector => selector.request.params)
   const dispatch = useAppDispatch()
