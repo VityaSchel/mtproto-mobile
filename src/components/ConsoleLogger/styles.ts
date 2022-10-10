@@ -5,6 +5,9 @@ export default StyleSheet.create({
     zIndex: 100,
     backgroundColor: '#121212',
     borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopRightRadius: 10
+  },
+  text: {
+    fontFamily: 'RobotoMono_400Regular'
   }
 })

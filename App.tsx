@@ -11,12 +11,22 @@ import HomeScreen from './src/HomeScreen'
 import EditorScreen from './src/ConstructorParams/EditorScreen'
 import SessionsScreen from './src/SessionsScreen'
 import SettingsScreen from './src/SettingsScreen'
+import FilesScreen from './src/FilesScreen'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { useFonts, RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 
 const Stack = createNativeStackNavigator()
 
 export default function Main() {
+  const [fontsLoaded] = useFonts({
+    RobotoMono_400Regular,
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
+  
   return (
     <UIKittenProvider {...eva} theme={eva.dark}>
       <PaperProvider theme={MD3DarkTheme}>
@@ -40,6 +50,7 @@ function App() {
             <Stack.Screen name='Settings' component={SettingsScreen} />
             <Stack.Screen name='Home' component={HomeScreen} />
             <Stack.Screen name='ConstructorEditor' component={EditorScreen} />
+            <Stack.Screen name='Files' component={FilesScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
