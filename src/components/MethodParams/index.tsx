@@ -60,7 +60,7 @@ function Param(props: { param: ParamAlias, prefix: string }) {
       'number': <NumberField {...sharedProps} />,
       'string': <StringField {...sharedProps} />,
       'boolean': <BooleanField {...sharedProps} />,
-      'bytes': <Text>bytes</Text>,
+      'bytes': <Text>Bytes type is not supported at the moment</Text>,
     }[paramType.type]
   if(paramComponent === undefined) throw 'Unknown param type'
 

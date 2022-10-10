@@ -1,3 +1,4 @@
+import React from 'react'
 import { View } from 'react-native'
 import { Button, IconButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -11,12 +12,15 @@ export default function BottomButtonsRow() {
   const request = useAppSelector(selector => selector.request)
   const method = tlschema.methods.find(m => m.method === request.method)
   const dispatch = useAppDispatch()
+  const [processingRequst, setProcessingRequst] = React.useState(false)
 
   const dispatchRequest = async () => {
     const methodName = request.method as string
     const defaults = getDefaults(methodName)
     const params = parseFields(defaults, request.params)
+    setProcessingRequst(true)
     await call(methodName, params)
+    setProcessingRequst(false)
   }
 
   return (
@@ -28,6 +32,8 @@ export default function BottomButtonsRow() {
             icon='send'
             style={styles.sendRequest}
             onPress={dispatchRequest}
+            disabled={processingRequst}
+            loading={processingRequst}
           >
             Send
           </Button>
