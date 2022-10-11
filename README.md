@@ -6,6 +6,8 @@ Mobile app with wrapper for MTProto that allows you to make requests to Telegram
 
 Made with Expo (react-native) and TypeScript. Uses [@mtproto/core](https://mtproto-core.js.org/) in backend.
 
+[Download in Play Store](https://play.google.com/store/apps/details?id=com.vityaschel.mtprotomobile)
+
 Features:
 
 - Multisessions
