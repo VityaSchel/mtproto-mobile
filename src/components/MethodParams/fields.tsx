@@ -33,7 +33,7 @@ export function NumberField(props: FieldProps) {
       setValue(null)
     } else {
       const numberValue = Number(text)
-      if(Number.isFinite(numberValue) && !/^[^.]+\.$/.test(text)) {
+      if(Number.isFinite(numberValue) && !/^[^.]+\.$/.test(text) && numberValue < Number.MAX_SAFE_INTEGER) {
         setValue(numberValue)
       } else {
         setValue(text)
@@ -91,11 +91,12 @@ export function ByteField(props: FieldProps) {
   const setValue = (text: string | null) => dispatch(setParam({ fieldID: props.fieldID, value: { type: 'bytes', value: JSON.parse(text) } }))
 
   const onChange = (text: string) => {
-    if(isJSONdeserializable()){
-      setValue(text)
-    } else {
-      setValue(null)
-    }
+    // if(isJSONdeserializable()){
+    //   setValue(text)
+    // } else {
+    //   setValue(null)
+    // }
+    setValue(text)
   } 
 
   const isJSONdeserializable = () => {
@@ -110,7 +111,7 @@ export function ByteField(props: FieldProps) {
   return (
     <TextInput
       mode='outlined'
-      value={String(value)}
+      value={value !== '' && JSON.stringify(value)}
       onChangeText={onChange}
       style={styles.field}
       dense
