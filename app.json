@@ -2,7 +2,7 @@
   "expo": {
     "name": "MTProto Mobile",
     "slug": "mtproto-mobile",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -25,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.vityaschel.mtprotomobile"
+      "package": "com.vityaschel.mtprotomobile",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png",
