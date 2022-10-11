@@ -9,15 +9,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { nanoid } from 'nanoid'
 import clone from 'just-clone'
 import { initializeAPI } from '../mtproto'
+import Export from './Export'
+import Import from './Import'
 
 type Session = {
   id: string
-  createdAt: Date
+  createdAt: number
 }
 
 export default function SessionsScreen() {
   const [sessions, setSessions] = React.useState<Session[]>([])
   const navigation = useNavigation()
+  const [exportSessionVisible, setExportSessionVisible] = React.useState(false)
+  const [sessionDataDialog, setSessionDataDialog] = React.useState('')
+  const [importSessionVisible, setImportSessionVisible] = React.useState(false)
+  const [importSessionData, setImportSessionData] = React.useState('')
 
   const selectSession = async (index: number) => {
     await initializeAPI()
@@ -25,10 +31,12 @@ export default function SessionsScreen() {
     navigation.replace('Home')
   }
 
-  const newSession = () => {
-    const newSessions = [...sessions, { createdAt: Date.now(), id: nanoid(6) }]
-    AsyncStorage.setItem('sessions', JSON.stringify(newSessions))
+  const newSession = async () => {
+    const sessionID = nanoid(6)
+    const newSessions = [...sessions, { createdAt: Date.now(), id: sessionID }]
     setSessions(newSessions)
+    await AsyncStorage.setItem('sessions', JSON.stringify(newSessions))
+    return sessionID
   }
 
   const removeSession = async (index: number) => {
@@ -59,6 +67,43 @@ export default function SessionsScreen() {
     }
   }
 
+  const displaySessionData = async (session: Session) => {
+    setExportSessionVisible(true)
+    const keys = await AsyncStorage.getAllKeys()
+    const prefix = `mtproto_data_session${session.id}_`
+    const sessionKeys = keys
+      .filter(key => key.startsWith(prefix))
+      .map(key => key.substring(prefix.length))
+    const data = Object.fromEntries(
+      await Promise.all(
+        sessionKeys.map(async (sessionKey: string) => {
+          return [
+            sessionKey,
+            await AsyncStorage.getItem(prefix + sessionKey)
+          ]
+        })
+      )
+    )
+    setSessionDataDialog(JSON.stringify(data))
+  }
+
+  const importSession = async () => {
+    let sessionData = {}
+    try {
+      sessionData = JSON.parse(importSessionData)
+      if(typeof sessionData !== 'object') throw 'Incorrect type'
+    } catch(e) {
+      return false
+    }
+    const sessionID = await newSession()
+    const prefix = `mtproto_data_session${sessionID}_`
+    for(const [key, val] of Object.entries(sessionData)) {
+      await AsyncStorage.setItem(prefix + key, val)
+    }
+    setImportSessionVisible(false)
+    setImportSessionData('')
+  }
+
   return (
     <View style={globalStyles.view}>
       <View style={globalStyles.centeredView}>
@@ -71,6 +116,7 @@ export default function SessionsScreen() {
               left={props => <List.Icon {...props} icon="folder" />}
               style={styles.item}
               onPress={() => selectSession(index)}
+              onLongPress={() => displaySessionData(session)}
             />
             <IconButton 
               icon='close-octagon-outline'
@@ -78,13 +124,31 @@ export default function SessionsScreen() {
             />
           </View>
         ))}
+        <Export visible={exportSessionVisible} data={sessionDataDialog} onHide={() => setExportSessionVisible(false)} />
         {!sessions.length && <Text style={styles.hint}>Create session to keep your account&apos;s data</Text>}
         {sessions.length < 5 && (
-          <Button
-            mode='contained'
-            onPress={newSession}
-          >New session</Button>
+          <View style={styles.bottomButtons}>
+            <Button
+              mode='contained'
+              onPress={newSession}
+            >
+              New session
+            </Button>
+            <IconButton
+              mode='contained'
+              icon='database-import-outline'
+              size={25}
+              onPress={() => setImportSessionVisible(true)}
+            />
+          </View>
         )}
+        <Import 
+          visible={importSessionVisible}
+          onHide={() => setImportSessionVisible(false)}
+          onDone={importSession}
+          value={importSessionData}
+          setValue={setImportSessionData}
+        />
         <Button
           mode='contained-tonal'
           onPress={() => navigation.push('Settings')}

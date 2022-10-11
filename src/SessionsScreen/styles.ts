@@ -16,5 +16,15 @@ export default StyleSheet.create({
   hint: {
     marginBottom: 20,
     color: '#999'
+  },
+  sessionData: {
+    fontFamily: 'RobotoMono_400Regular',
+    fontSize: 10,
+    lineHeight: 10
+  },
+  bottomButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
