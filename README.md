@@ -17,6 +17,10 @@ Features:
 - Support for recursive constructors and subtypes
 - Console logger with info/error support
 - Simple switch of api_id and api_hash
+- Easily import/export sessions with JSON data
+  - Long press on session in list to export
+  - Tap on an icon button near New session button to import
+- Easily upload/download files with native integration with Android API
 
 ## Building
 
