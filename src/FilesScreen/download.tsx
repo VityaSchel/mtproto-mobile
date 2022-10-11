@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './styles'
 import * as Permissions from 'expo-permissions'
 import * as MediaLibrary from 'expo-media-library'
+import * as FileSystem from 'expo-file-system'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Buffer } from 'buffer'
 import { uploadFile, downloadFile } from '../mtproto/files'
@@ -59,11 +60,12 @@ export default function DownloadWidget() {
     let fileReferenceParsed = JSON.parse(fileReference)
     if(typeof(fileReferenceParsed)==='object' && isIterable(fileReferenceParsed))
       fileReferenceParsed = Object.entries(fileReferenceParsed).sort((a, b) => Number(a[0]) - Number(b[0])).map(([,val]) => Number(val))
-    console.log(fileReferenceParsed)
+    console.log(type, fileID, accessHash, fileReferenceParsed)
     downloadFile(type, fileID, accessHash, fileReferenceParsed)
       .then(data => {
         setIsDownloading(false)
-        console.log(data)
+        FileSystem.writeAsStringAsync(fileUri, contents, options)
+        saveFileToFilesystem(data)
       })
       .catch(e => {
         setIsDownloading(false)

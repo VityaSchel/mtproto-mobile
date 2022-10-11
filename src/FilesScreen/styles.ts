@@ -11,6 +11,9 @@ export default StyleSheet.create({
     display: 'flex',
     alignItems: 'center'
   },
+  result: {
+    marginTop: 10
+  },
   stat: {
     display: 'flex',
     flexDirection: 'row'

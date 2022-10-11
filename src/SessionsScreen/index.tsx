@@ -124,6 +124,7 @@ export default function SessionsScreen() {
             />
           </View>
         ))}
+        <Text style={{ marginBottom: 10, color: '#555' }}>Long press on any session to view its data</Text>
         <Export visible={exportSessionVisible} data={sessionDataDialog} onHide={() => setExportSessionVisible(false)} />
         {!sessions.length && <Text style={styles.hint}>Create session to keep your account&apos;s data</Text>}
         {sessions.length < 5 && (
