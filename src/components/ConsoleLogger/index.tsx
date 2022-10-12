@@ -28,18 +28,9 @@ export default function ConsoleLogger() {
 
   const renderItem = React.useCallback(
     ({ item, index }) => {
-      let itemContent = item.content
-      try {
-        const itemContentParsed = JSON.parse(itemContent)
-        if(typeof itemContentParsed === 'object') {
-          if(itemContentParsed['app_id']) itemContentParsed['app_id'] = '[hidden from console]'
-          if(itemContentParsed['app_hash']) itemContentParsed['app_hash'] = '[hidden from console]'
-        }
-        itemContent = JSON.stringify(itemContentParsed)
-      } catch(e) {/**/}
       return (
         <View>
-          <Text style={{ color: item.type === 'error' ? 'red' : 'white', ...styles.text }} selectable>{itemContent}</Text>
+          <Text style={{ color: item.type === 'error' ? 'red' : 'white', ...styles.text }} selectable>{item.content}</Text>
           {(index !== (logs.length - 1)) && <Divider style={{ marginVertical: 10 }} />}
         </View>
       )

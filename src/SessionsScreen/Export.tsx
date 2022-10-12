@@ -1,4 +1,5 @@
 import * as Clipboard from 'expo-clipboard'
+import { ToastAndroid } from 'react-native'
 import { Button, Dialog, Paragraph, Portal } from 'react-native-paper'
 import styles from './styles'
 
@@ -15,7 +16,8 @@ export default function Export(props: { visible: boolean, data: string, onHide: 
         <Dialog.Actions>
           <Button onPress={() => { 
             Clipboard.setStringAsync(props.data)
-            props.onHide() 
+            ToastAndroid.show('Copied!', ToastAndroid.SHORT)
+            props.onHide()
           }}>Copy</Button>
           <Button onPress={props.onHide}>Close</Button>
         </Dialog.Actions>

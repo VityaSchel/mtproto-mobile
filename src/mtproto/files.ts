@@ -36,7 +36,7 @@ export async function downloadFile(type: 'photo' | 'document', id: string, acces
       offset: offset,
       limit: partSize
     }
-    console.log(body)
+    console.log(body, dcId)
     const file = await global.api.call('upload.getFile', body, dcId && { dcId })
     return file
   }

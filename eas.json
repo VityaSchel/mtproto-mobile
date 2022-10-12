@@ -13,7 +13,9 @@
     },
     "preview": {
       "credentialsSource": "local",
-      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "ANDROID_SDK_ROOT": "/usr/local/bin/android-sdk"
       }

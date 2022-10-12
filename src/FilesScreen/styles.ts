@@ -32,5 +32,13 @@ export default StyleSheet.create({
   },
   doneButton: {
     marginTop: 20
+  },
+  downloadedImage: { 
+    width: '100%', 
+    height: undefined, 
+    aspectRatio: 1 
+  },
+  previewImageButton: {
+    marginTop: 10
   }
 })

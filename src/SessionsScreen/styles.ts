@@ -20,7 +20,8 @@ export default StyleSheet.create({
   sessionData: {
     fontFamily: 'RobotoMono_400Regular',
     fontSize: 10,
-    lineHeight: 10
+    lineHeight: 10,
+    maxHeight: 500
   },
   bottomButtons: {
     display: 'flex',

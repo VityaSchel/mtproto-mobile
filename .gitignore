@@ -16,3 +16,6 @@ web-build/
 *.keystore
 *.aab
 *.apk
+
+.env
+tests
