@@ -79,10 +79,12 @@ export default function DownloadWidget() {
     const path = `${FileSystem.cacheDirectory}/${nanoid(32)}.jpg`
     await FileSystem.writeAsStringAsync(path, downloadedImageBase64, { encoding: 'base64' })
 
-    const { status, permissions } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY_WRITE_ONLY)
-    if (status === 'granted') {// && permissions.mediaLibrary.accessPrivileges !== 'limited') {
+    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY_WRITE_ONLY)
+    if (status === 'granted') {
       try {
         await saveFileToFilesystem(path)
+        ToastAndroid.show('Saved to gallery!', ToastAndroid.LONG)
+        setVisible(false)
       } catch(e) {
         console.error(e)
         ToastAndroid.show(JSON.stringify(e), ToastAndroid.LONG)
