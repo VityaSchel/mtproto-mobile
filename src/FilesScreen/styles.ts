@@ -40,5 +40,11 @@ export default StyleSheet.create({
   },
   previewImageButton: {
     marginTop: 10
+  },
+  filesize: {
+    marginBottom: 10
+  },
+  hint: {
+    marginVertical: 10
   }
 })
