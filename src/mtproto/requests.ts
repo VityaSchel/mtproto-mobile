@@ -7,14 +7,28 @@ global.apiLogger = []
 const logging = {
   log(...content: (string | object)[]) {
     console.log(...content)
-    global.apiLogger.push(({ type: 'info', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c, null, 2)).join(' ') }))
+    global.apiLogger.push(({ type: 'info', content: consoleFormatter(...content) }))
     global.apiLoggerUpdate()
   },
   error(...content: (string | object)[]) {
     console.error(...content)
-    global.apiLogger.push(({ type: 'error', content: content.map(c => typeof c === 'string' ? c : JSON.stringify(c)).join(' ') }))
+    global.apiLogger.push(({ type: 'error', content: consoleFormatter(...content) }))
     global.apiLoggerUpdate()
   }
+}
+
+const consoleFormatter = (...content: (string | object)[]): string => {
+  return content.map(contentPart => {
+    if(typeof contentPart === 'string') {
+      return contentPart
+    } else {
+      if(typeof contentPart === 'object') {
+        if(contentPart['app_id']) contentPart['app_id'] = '[hidden from console]'
+        if(contentPart['app_hash']) contentPart['app_hash'] = '[hidden from console]'
+      }
+      return JSON.stringify(contentPart, null, 2)
+    }
+  }).join(' ')
 }
 
 export async function call(methodName: string, params: object) {
