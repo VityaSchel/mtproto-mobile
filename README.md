@@ -8,6 +8,9 @@ Made with Expo (react-native) and TypeScript. Uses [@mtproto/core](https://mtpro
 
 [Download in Play Store](https://play.google.com/store/apps/details?id=com.vityaschel.mtprotomobile)
 
+> [!IMPORTANT]
+> I'm looking for a job! Interested in hiring me? Visit [cv.hloth.dev](https://cv.hloth.dev) to review my resume & CV.
+
 Features:
 
 - Multisessions
